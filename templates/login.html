@@ -31,8 +31,8 @@
             const valisPassword = "12345"
 
             if (username == valisUsername && password == valisPassword){
-                window.location.href = "home"
-
+                messageDiv.textContent = 'login succsessfull.';
+                messageDiv.style.color = 'green';
             }else{
                 messageDiv.textContent = 'Invalid username or password.';
                 messageDiv.style.color = 'red';

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -15,11 +15,57 @@ def login():
         password = request.form['password']
         # בדיקת שם משתמש וסיסמה
         if username == 'admin' and password == '12345':
-            return redirect(url_for('home'))
+            return "Login successful."
         else:
             return 'Invalid Credentials. Please try again.'
 
-    return render_template('login.html')
+    # HTML של עמוד הלוגין
+    login_page = '''
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Page</title>
+    </head>
+    <body>
+        <h2>Login Page</h2>
+        <form action="/login" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br><br>
+            <button type="submit">Login</button>
+        </form>
+    </body>
+    <script>
+     document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password= document.getElementById("password").value;
+
+            const messageDiv = document.getElementById('message');
+
+            const valisUsername = "admin"
+            const valisPassword = "12345"
+
+            if (username == valisUsername && password == valisPassword){
+                messageDiv.textContent = 'login succsessfull.';
+                messageDiv.style.color = 'green';
+            }else{
+                messageDiv.textContent = 'Invalid username or password.';
+                messageDiv.style.color = 'red';
+            }
+
+
+     })
+</script>
+    </html>
+    '''
+    return login_page
 
 if __name__ == '__main__':
     app.run(debug=True)
